@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
-//import { useRouter } from "next/navigation";
+import router from "next/router";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -19,6 +19,8 @@ import { FormControl, FormMessage } from "@/components/ui/form";
 import { FormItem, FormLabel } from "@/components/ui/form";
 import { Form, FormField } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { authClient } from "@/lib/auth-client";
+
 
 
 const registerSchema = z.object({
@@ -32,6 +34,7 @@ const registerSchema = z.object({
     .string()
     .trim()
     .min(8, { message: "A senha deve ter pelo menos 8 caracteres" }),
+ 
 });
 
 const SignUpForm = () => {
@@ -46,26 +49,29 @@ const SignUpForm = () => {
   });
 
   async function onSubmit(values: z.infer<typeof registerSchema>) {
-    // await authClient.signUp.email(
-    //   {
-    //     email: values.email,
-    //     password: values.password,
-    //     name: values.name,
-    //   },
-    //   {
-    //     onSuccess: () => {
-    //       router.push("/dashboard");
-    //     },
-    //     onError: (ctx) => {
-    //       if (ctx.error.code === "USER_ALREADY_EXISTS") {
-    //        // toast.error("E-mail já cadastrado.");
-    //         return;
-    //       }
-    //     //  toast.error("Erro ao criar conta.");
-    //     },
-    //   },
-    console.log(values)
-   // );
+    await authClient.signUp.email(
+      {
+        email: values.email,
+        password: values.password,
+        name: values.name,       
+      },
+      {
+        onSuccess: () => {
+          router.push("/dashboard");
+          console.log("Conta criada com sucesso.");
+        },
+        onError: (ctx) => {
+          if (ctx.error.code === "USER_ALREADY_EXISTS") {
+           // toast.error("E-mail já cadastrado.");
+         //  console.log("E-mail já cadastrado.");
+            return;
+          }
+        //  toast.error("Erro ao criar conta.");
+     //   console.log("Erro ao criar conta.", ctx.error.message);
+        },
+      },
+    //console.log(values)
+    );
   }
 
   return (
