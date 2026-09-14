@@ -1,5 +1,6 @@
 
 
+
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import LoginForm from "./component/login-form";
@@ -7,18 +8,16 @@ import SignUpForm from "./component/sign-up-form";
 
 const AuthenticationPage = () => {
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-gray-100">
+   <div className="flex h-screen w-screen items-center justify-center">
       <Tabs defaultValue="login" className="w-[400px]">
-        <TabsList>
+        <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="login">Login</TabsTrigger>
-          <TabsTrigger value="account">Criar conta</TabsTrigger>
+          <TabsTrigger value="register">Criar conta</TabsTrigger>
         </TabsList>
-
         <TabsContent value="login">
           <LoginForm />
         </TabsContent>
-
-        <TabsContent value="account">
+        <TabsContent value="register">
           <SignUpForm />
         </TabsContent>
       </Tabs>
