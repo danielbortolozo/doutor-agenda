@@ -12,13 +12,13 @@ import SignUpForm from "./component/sign-up-form";
 
 const AuthenticationPage = async () => {
 
- const session = await auth.api.getSession({
-        headers: await headers(),
-    });
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
 
-    if (session?.user) {
-        redirect("/dashboard");
-    }  
+  if (session?.user) {
+    redirect("/dashboard");
+  }  
 
 
 
